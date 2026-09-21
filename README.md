@@ -123,3 +123,4 @@ follow Vercel's DNS instructions (usually an `A` record to Vercel's IP or a
 
 There's no analytics wired up by default. To add Meta Pixel / GA4 / TikTok
 Pixel later, drop their script tags into `app/layout.js` inside `<body>`.
+"# pakitini" 

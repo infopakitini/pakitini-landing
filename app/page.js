@@ -12,6 +12,7 @@ import Reviews from "@/components/Reviews";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import StickyBar from "@/components/StickyBar";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 
 export default function Home() {
   return (
@@ -30,6 +31,7 @@ export default function Home() {
       <FAQ />
       <Footer />
       <StickyBar />
+      <FloatingWhatsApp />
     </>
   );
 }

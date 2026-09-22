@@ -4,13 +4,14 @@ import { useRouter, usePathname } from "next/navigation";
 import { useLang } from "./LangProvider";
 import { useOrder } from "./OrderProvider";
 import { PRODUCT } from "@/lib/product.config";
+import { useWhatsAppLink } from "@/lib/whatsapp";
 
 export default function Footer() {
-  const { t } = useLang();
+  const { lang, t } = useLang();
   const { packId } = useOrder();
   const router = useRouter();
   const pathname = usePathname();
-  const whatsappHref = `https://wa.me/${PRODUCT.WHATSAPP_NUMBER}`;
+  const whatsappHref = useWhatsAppLink(lang);
 
   function goToSection(id) {
     if (pathname === "/") {

@@ -72,7 +72,7 @@ export async function POST(request) {
   const deliveryTimeLabel =
     data.deliveryTime === "custom" ? data.customDeliveryTime : DELIVERY_TIME_LABELS[data.deliveryTime];
 
-  const emailHtml = buildOrderEmailHtml({
+  const emailFields = {
     orderId,
     createdAt,
     itemLabel: pack.labelEn,
@@ -86,25 +86,43 @@ export async function POST(request) {
     city: data.city,
     deliveryTimeLabel,
     notes: data.notes,
-  });
+  };
 
+  const resend = new Resend(RESEND_API_KEY);
+
+  // The owner notification is the actual order record — its delivery is
+  // required for the request to count as a success.
   try {
-    const resend = new Resend(RESEND_API_KEY);
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: ORDER_RECEIVER_EMAIL,
       replyTo: data.email,
-      subject: `Invoice ${orderId} — New COD Order (${PRODUCT.CURRENCY} ${pack.price})`,
-      html: emailHtml,
+      subject: `New Order Received — ${orderId} (${PRODUCT.CURRENCY} ${pack.price})`,
+      html: buildOrderEmailHtml({ ...emailFields, recipient: "owner" }),
     });
 
     if (error) {
-      console.error("Resend send error:", error);
+      console.error("Owner notification email failed:", error);
       return NextResponse.json({ success: false, error: "email_failed" }, { status: 502 });
     }
   } catch (err) {
-    console.error("Order email send threw:", err);
+    console.error("Owner notification email threw:", err);
     return NextResponse.json({ success: false, error: "email_failed" }, { status: 502 });
+  }
+
+  // The customer's invoice copy is best-effort — a failure here shouldn't
+  // undo an order that's already been recorded via the owner email above.
+  try {
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: data.email,
+      replyTo: ORDER_RECEIVER_EMAIL,
+      subject: `Your ${PRODUCT.NAME} Order Invoice — ${orderId}`,
+      html: buildOrderEmailHtml({ ...emailFields, recipient: "customer" }),
+    });
+    if (error) console.error("Customer invoice email failed:", error);
+  } catch (err) {
+    console.error("Customer invoice email threw:", err);
   }
 
   return NextResponse.json({

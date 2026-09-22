@@ -232,6 +232,7 @@ html[dir="rtl"] .dims-inline{text-align:right;}
 .order-success-icon{width:56px; height:56px; border-radius:50%; background:var(--green-tint); color:var(--green); font-size:26px; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 18px;}
 .order-success h3{font-size:22px; margin-bottom:10px;}
 .order-success p{color:var(--muted); font-size:14.5px; margin-bottom:22px;}
+.order-success-email-note{background:var(--green-tint); color:var(--green-deep) !important; font-size:13px !important; font-weight:600; padding:10px 14px; border-radius:6px; margin-bottom:22px;}
 .order-success-card{border:1px solid var(--line); border-radius:8px; padding:16px 18px; margin-bottom:22px; text-align:left;}
 html[dir="rtl"] .order-success-card{text-align:right;}
 .order-success-card .row{display:flex; justify-content:space-between; gap:12px; padding:7px 0; font-size:14px; border-top:1px solid var(--line);}

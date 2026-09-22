@@ -96,6 +96,7 @@ export default function OrderForm() {
         packId: result.data.packId,
         name: result.data.name,
         phone: result.data.phone,
+        email: result.data.email,
         city: result.data.city,
         deliveryTime: result.data.deliveryTime,
         customDeliveryTime: result.data.customDeliveryTime,
@@ -130,6 +131,9 @@ export default function OrderForm() {
         <div className="order-success-icon">✓</div>
         <h3>{t("success_title")}</h3>
         <p>{t("success_body")}</p>
+        <p className="order-success-email-note">
+          {t("success_email_note", { email: successData.email })}
+        </p>
         <div className="order-success-card">
           <div className="row">
             <span>{t("success_order_id")}</span>

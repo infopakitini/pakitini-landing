@@ -28,7 +28,9 @@ export default function Footer() {
           <div>
             <div className="logo">
               {PRODUCT.LOGO ? (
-                <img src={PRODUCT.LOGO} alt={PRODUCT.NAME} className="logo-img logo-img-invert" />
+                <span className="logo-badge">
+                  <img src={PRODUCT.LOGO} alt={PRODUCT.NAME} className="logo-img" />
+                </span>
               ) : (
                 <>
                   Pak<span className="dot">i</span>t<span className="dot">i</span>ni

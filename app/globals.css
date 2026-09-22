@@ -213,6 +213,9 @@ html[dir="rtl"] .rating-bar-count{text-align:left;}
 .faq-item[open] summary::after{content:"\2013";}
 .faq-item p{margin-top:12px; font-size:14.5px; color:var(--muted); max-width:680px;}
 
+.back-link{display:inline-flex; align-items:center; gap:8px; background:none; border:none; padding:0; margin:28px 0 8px; font-size:14px; font-weight:600; color:var(--muted); cursor:pointer;}
+.back-link:hover{color:var(--green);}
+.back-link svg{width:16px; height:16px;}
 .policy-list{display:flex; flex-direction:column; gap:16px; padding-inline-start:22px;}
 .policy-list li{font-size:15px; color:var(--ink); line-height:1.7; padding-inline-start:6px;}
 @media(max-width:600px){.policy-list{padding-inline-start:18px;} .policy-list li{font-size:14px;}}

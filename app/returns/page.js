@@ -7,7 +7,7 @@ import { PRODUCT } from "@/lib/product.config";
 
 export default function ReturnsPage() {
   const { t } = useLang();
-  const sections = ["1", "2", "3", "4", "5"];
+  const sections = ["1", "2", "3"];
 
   return (
     <>

@@ -128,8 +128,19 @@ follow Vercel's DNS instructions (usually an `A` record to Vercel's IP or a
 - No accounts, wishlist, cart page, or multi-product catalog.
 - No order-management dashboard — read new orders from the inbox.
 
-## Analytics (optional, later)
+## Meta Pixel (optional)
 
-There's no analytics wired up by default. To add Meta Pixel / GA4 / TikTok
-Pixel later, drop their script tags into `app/layout.js` inside `<body>`.
+Built in but off by default — nothing loads until you set `NEXT_PUBLIC_META_PIXEL_ID`.
+
+1. Go to [Meta Events Manager](https://business.facebook.com/events_manager2/) →
+   your Pixel → Settings, and copy its ID (a string of digits).
+2. Add `NEXT_PUBLIC_META_PIXEL_ID` in Vercel (Project → Settings → Environment
+   Variables) and in your local `.env.local`, then redeploy.
+3. That's it — `components/MetaPixel.js` loads the base pixel and fires a
+   `PageView` automatically, and `components/OrderForm.js` fires a
+   `Purchase` event (with the order's value, currency, and pack) the moment
+   an order completes successfully.
+
+For GA4 / TikTok Pixel later, the same pattern works: add a small component
+next to `MetaPixel.js` and render it in `app/layout.js`.
 "# pakitini" 

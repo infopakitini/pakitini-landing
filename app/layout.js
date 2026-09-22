@@ -1,6 +1,7 @@
 import { Montserrat, Inter, Tajawal } from "next/font/google";
 import { LangProvider } from "@/components/LangProvider";
 import { OrderProvider } from "@/components/OrderProvider";
+import MetaPixel from "@/components/MetaPixel";
 import { PRODUCT } from "@/lib/product.config";
 import "./globals.css";
 
@@ -47,6 +48,7 @@ export default function RootLayout({ children }) {
       className={`${montserrat.variable} ${inter.variable} ${tajawal.variable}`}
     >
       <body>
+        <MetaPixel />
         <LangProvider>
           <OrderProvider>{children}</OrderProvider>
         </LangProvider>

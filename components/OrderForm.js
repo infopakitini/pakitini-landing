@@ -91,6 +91,18 @@ export default function OrderForm() {
 
       saveCustomer(result.data);
 
+      // Fires only if a Meta Pixel is configured (see components/MetaPixel.js) —
+      // reports the completed COD order as a Purchase for ad optimization.
+      if (typeof window !== "undefined" && window.fbq) {
+        window.fbq("track", "Purchase", {
+          value: data.total,
+          currency: PRODUCT.CURRENCY,
+          content_name: PRODUCT.NAME,
+          content_ids: [result.data.packId],
+          num_items: data.quantity,
+        });
+      }
+
       setSuccessData({
         orderId: data.orderId,
         packId: result.data.packId,

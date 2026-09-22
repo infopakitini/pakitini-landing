@@ -45,7 +45,7 @@ html[dir="rtl"] svg.flip-rtl{transform:scaleX(-1);}
 
 .announce{background:var(--ink); color:#fff; padding:11px 0; font-size:13.5px; font-weight:600; letter-spacing:0.01em; text-align:center;}
 .announce .wrap{display:flex; align-items:center; justify-content:center; gap:22px; flex-wrap:wrap; position:relative;}
-.announce .chip{display:flex; align-items:center; gap:8px;}
+.announce .chip{display:flex; align-items:center; gap:8px; font-weight:bold;}
 .announce .chip svg{width:16px; height:16px; color:var(--gold);}
 .announce .sep{color:#8a8385;}
 .announce .lang-toggle{position:absolute; inset-inline-end:0; top:50%; transform:translateY(-50%);}
@@ -251,7 +251,9 @@ html[dir="rtl"] .rating-bar-count{text-align:left;}
 .hp-field{position:absolute; left:-9999px; width:1px; height:1px; opacity:0;}
 
 .order-success{background:#fff; border:1px solid var(--line); border-radius:10px; padding:36px 28px; text-align:center; max-width:520px; margin:0 auto;}
-.order-success-icon{width:56px; height:56px; border-radius:50%; background:var(--green-tint); color:var(--green); font-size:26px; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 18px;}
+.order-success-icon{width:76px; height:76px; border-radius:50%; background:var(--green); color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto 18px; box-shadow:0 8px 24px rgba(29,140,71,0.35); animation:order-success-pop 0.4s cubic-bezier(0.34,1.56,0.64,1);}
+.order-success-icon svg{width:36px; height:36px;}
+@keyframes order-success-pop{from{transform:scale(0.4); opacity:0;} to{transform:scale(1); opacity:1;}}
 .order-success h3{font-size:22px; margin-bottom:10px;}
 .order-success p{color:var(--muted); font-size:14.5px; margin-bottom:22px;}
 .order-success-email-note{background:var(--green-tint); color:var(--green-deep) !important; font-size:13px !important; font-weight:600; padding:10px 14px; border-radius:6px; margin-bottom:22px;}
@@ -309,7 +311,7 @@ footer ul li a:hover{color:var(--gold);}
   .wrap{padding:0 16px;}
   .announce{padding:8px 0;}
   .announce .wrap{gap:6px 10px; font-size:10.5px; font-weight:500;}
-  .announce .chip svg{width:12px; height:12px;}
+  .announce .chip svg{width:30px; height:12px;}
   .lang-toggle{transform:scale(0.9); transform-origin:center;}
   .nav .wrap{height:60px;}
   .logo{font-size:19px;}

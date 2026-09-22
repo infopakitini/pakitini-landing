@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import { useLang } from "./LangProvider";
 import { useOrder } from "./OrderProvider";
 import { validateOrder } from "@/lib/validation";
-import { PRODUCT, DEFAULT_PACK_ID, getDefaultInStockPackId } from "@/lib/product.config";
+import { PRODUCT } from "@/lib/product.config";
 import { getSavedCustomer, saveCustomer } from "@/lib/savedCustomer";
+import { saveOrderSuccess } from "@/lib/orderSuccess";
 import PackPicker from "./PackPicker";
 
 const FIELD_ERROR_KEYS = {
@@ -33,12 +34,11 @@ const EMPTY_FORM = {
 
 export default function OrderForm() {
   const { lang, t } = useLang();
-  const { packId, setPackId, quantity, total } = useOrder();
+  const { packId, quantity, total } = useOrder();
   const router = useRouter();
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState("idle"); // idle | submitting | success | error
-  const [successData, setSuccessData] = useState(null);
+  const [status, setStatus] = useState("idle"); // idle | submitting | error
   const [submitError, setSubmitError] = useState("");
 
   const currency = lang === "ar" ? PRODUCT.CURRENCY_AR : PRODUCT.CURRENCY;
@@ -103,7 +103,7 @@ export default function OrderForm() {
         });
       }
 
-      setSuccessData({
+      saveOrderSuccess({
         orderId: data.orderId,
         packId: result.data.packId,
         name: result.data.name,
@@ -115,80 +115,11 @@ export default function OrderForm() {
         quantity: data.quantity,
         total: data.total,
       });
-      setStatus("success");
+      router.push("/order/success");
     } catch {
       setSubmitError(t("err_submit_failed"));
       setStatus("error");
     }
-  }
-
-  function goToProductPage() {
-    setForm(EMPTY_FORM);
-    setErrors({});
-    setStatus("idle");
-    setSuccessData(null);
-    setSubmitError("");
-    setPackId(getDefaultInStockPackId() ?? DEFAULT_PACK_ID);
-    router.push("/");
-  }
-
-  if (status === "success" && successData) {
-    const deliveryLabel =
-      successData.deliveryTime === "custom"
-        ? successData.customDeliveryTime
-        : t(`delivery_${successData.deliveryTime}`);
-
-    return (
-      <div className="order-success">
-        <div className="order-success-icon">✓</div>
-        <h3>{t("success_title")}</h3>
-        <p>{t("success_body")}</p>
-        <p className="order-success-email-note">
-          {t("success_email_note", { email: successData.email })}
-        </p>
-        <div className="order-success-card">
-          <div className="row">
-            <span>{t("success_order_id")}</span>
-            <b>{successData.orderId}</b>
-          </div>
-          <div className="row">
-            <span>{t("order_summary_product")}</span>
-            <b>
-              {PRODUCT.NAME} — {t(`pick_${successData.packId}_name`)}
-            </b>
-          </div>
-          <div className="row">
-            <span>{t("order_summary_qty")}</span>
-            <b>{successData.quantity}</b>
-          </div>
-          <div className="row">
-            <span>{t("order_summary_total")}</span>
-            <b>
-              {currency} {successData.total}
-            </b>
-          </div>
-          <div className="row">
-            <span>{t("field_name")}</span>
-            <b>{successData.name}</b>
-          </div>
-          <div className="row">
-            <span>{t("field_phone")}</span>
-            <b>{successData.phone}</b>
-          </div>
-          <div className="row">
-            <span>{t("field_city")}</span>
-            <b>{successData.city}</b>
-          </div>
-          <div className="row">
-            <span>{t("field_delivery_time")}</span>
-            <b>{deliveryLabel}</b>
-          </div>
-        </div>
-        <button type="button" className="checkout-btn" onClick={goToProductPage}>
-          {t("success_new_order")}
-        </button>
-      </div>
-    );
   }
 
   return (

@@ -26,7 +26,13 @@ export default function Footer() {
         <div className="footer-grid">
           <div>
             <div className="logo">
-              Pak<span className="dot">i</span>t<span className="dot">i</span>ni
+              {PRODUCT.LOGO ? (
+                <img src={PRODUCT.LOGO} alt={PRODUCT.NAME} className="logo-img logo-img-invert" />
+              ) : (
+                <>
+                  Pak<span className="dot">i</span>t<span className="dot">i</span>ni
+                </>
+              )}
             </div>
             <p className="about">{t("footer_about")}</p>
             <div className="cod-footer-badge">
@@ -58,7 +64,10 @@ export default function Footer() {
         </div>
         <div className="footer-bottom">
           <span>{t("copyright", { year: PRODUCT.BRAND_COPYRIGHT_YEAR })}</span>
-          <span>{t("legal_privacy")} · {t("legal_terms")} · {t("legal_returns")}</span>
+          <span>
+            {t("legal_privacy")} · {t("legal_terms")} ·{" "}
+            <a onClick={() => router.push("/returns")}>{t("legal_returns")}</a>
+          </span>
         </div>
       </div>
     </footer>

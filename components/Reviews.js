@@ -92,19 +92,6 @@ export default function Reviews() {
             <ReviewCard key={r.who} {...r} />
           ))}
         </div>
-
-        {photos.length > 0 && (
-          <>
-            <h3 className="review-photos-title">{t("reviews_photos_title")}</h3>
-            <div className="review-photos-grid">
-              {photos.map((src) => (
-                <div className="review-photo" key={src}>
-                  <img src={src} alt="" loading="lazy" />
-                </div>
-              ))}
-            </div>
-          </>
-        )}
       </div>
     </section>
   );

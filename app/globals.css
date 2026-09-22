@@ -188,13 +188,6 @@ html[dir="rtl"] .dims-inline{text-align:right;}
 .review-card .who-verified svg{width:12px; height:12px;}
 @media(max-width:820px){.review-grid{grid-template-columns:1fr;}}
 
-.review-photos-title{text-align:center; font-size:15px; font-weight:700; margin:48px 0 20px;}
-.review-photos-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:10px;}
-.review-photo{aspect-ratio:1/1; border-radius:6px; overflow:hidden; border:1px solid var(--line); background:var(--cream);}
-.review-photo img{width:100%; height:100%; object-fit:cover;}
-@media(max-width:820px){.review-photos-grid{grid-template-columns:repeat(4,1fr);}}
-@media(max-width:600px){.review-photos-grid{grid-template-columns:repeat(3,1fr); gap:8px;} .review-photos-title{margin:32px 0 16px; font-size:14px;}}
-
 .guarantee{background:var(--green-tint);}
 .guarantee .inner{max-width:640px; margin:0 auto; text-align:center;}
 .guarantee .seal{width:88px; height:88px; border-radius:50%; border:2px solid var(--green); display:flex; align-items:center; justify-content:center; margin:0 auto 22px;}

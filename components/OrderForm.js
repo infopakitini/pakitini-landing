@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useLang } from "./LangProvider";
 import { useOrder } from "./OrderProvider";
 import { validateOrder } from "@/lib/validation";
-import { PRODUCT, DEFAULT_PACK_ID } from "@/lib/product.config";
+import { PRODUCT, DEFAULT_PACK_ID, getDefaultInStockPackId } from "@/lib/product.config";
 import { getSavedCustomer, saveCustomer } from "@/lib/savedCustomer";
 import PackPicker from "./PackPicker";
 
@@ -128,7 +128,7 @@ export default function OrderForm() {
     setStatus("idle");
     setSuccessData(null);
     setSubmitError("");
-    setPackId(DEFAULT_PACK_ID);
+    setPackId(getDefaultInStockPackId() ?? DEFAULT_PACK_ID);
     router.push("/");
   }
 

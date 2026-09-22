@@ -1,12 +1,12 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-import { DEFAULT_PACK_ID, getPackById } from "@/lib/product.config";
+import { DEFAULT_PACK_ID, getPackById, getDefaultInStockPackId } from "@/lib/product.config";
 
 const OrderContext = createContext(null);
 
 export function OrderProvider({ children }) {
-  const [packId, setPackId] = useState(DEFAULT_PACK_ID);
+  const [packId, setPackId] = useState(() => getDefaultInStockPackId() ?? DEFAULT_PACK_ID);
   const pack = getPackById(packId);
 
   const value = {

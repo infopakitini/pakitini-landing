@@ -80,11 +80,15 @@ html[dir="rtl"] svg.flip-rtl{transform:scaleX(-1);}
 .pick-option:hover{background:var(--cream);}
 .pick-option.active{background:var(--green-tint); box-shadow:inset 3px 0 0 var(--green);}
 html[dir="rtl"] .pick-option.active{box-shadow:inset -3px 0 0 var(--green);}
+.pick-option.out-of-stock{cursor:not-allowed; opacity:0.5;}
+.pick-option.out-of-stock:hover{background:none;}
+.pick-option.out-of-stock .pick-price{text-decoration:line-through;}
 .pick-option input{accent-color:var(--green); width:17px; height:17px; flex-shrink:0;}
 .pick-left{display:flex; align-items:center; gap:12px;}
 .pick-name{font-size:14.5px; font-weight:700;}
 .pick-name .tag{display:inline-block; background:var(--ink); color:#fff; font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:10px; margin-left:8px; vertical-align:2px;}
 .pick-name .tag.gold{background:var(--gold);}
+.pick-name .tag.out-of-stock-tag{background:var(--red);}
 .pick-sub{font-size:12.5px; color:var(--muted); margin-top:2px;}
 .pick-price{text-align:right; flex-shrink:0;}
 html[dir="rtl"] .pick-price{text-align:left;}
@@ -240,7 +244,7 @@ html[dir="rtl"] .rating-bar-count{text-align:left;}
 
 .delivery-time-options{display:flex; flex-wrap:wrap; gap:10px;}
 .delivery-chip{display:flex; align-items:center; gap:6px; border:1px solid var(--line); border-radius:20px; padding:9px 16px; font-size:13.5px; font-weight:600; cursor:pointer; background:#fff;}
-.delivery-chip input{accent-color:var(--green);}
+.delivery-chip input{accent-color:var(--green); width:16px; height:16px; flex-shrink:0; margin:0;}
 .delivery-chip.active{background:var(--green-tint); border-color:var(--green); color:var(--green-deep);}
 .custom-time-input{margin-top:10px; border:1px solid var(--line); border-radius:5px; padding:11px 13px; font-size:14.5px; width:100%;}
 

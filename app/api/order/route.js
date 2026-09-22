@@ -3,7 +3,7 @@ import { sendMail } from "@/lib/mailer";
 import { validateOrder } from "@/lib/validation";
 import { generateOrderId } from "@/lib/orderId";
 import { buildOrderEmailHtml, DELIVERY_TIME_LABELS } from "@/lib/emailTemplate";
-import { PRODUCT, getPackById } from "@/lib/product.config";
+import { PRODUCT, getPackById, isPackInStock } from "@/lib/product.config";
 
 export const runtime = "nodejs";
 
@@ -67,6 +67,10 @@ export async function POST(request) {
   // Price is always resolved server-side from packId — never trust a
   // client-supplied price or total.
   const pack = getPackById(data.packId);
+  if (!isPackInStock(pack)) {
+    return NextResponse.json({ success: false, error: "out_of_stock" }, { status: 409 });
+  }
+
   const orderId = generateOrderId();
   const createdAt = new Date().toLocaleString("en-GB", { timeZone: "Asia/Dubai" });
   const deliveryTimeLabel =

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useLang } from "./LangProvider";
 import { useOrder } from "./OrderProvider";
 import { validateOrder } from "@/lib/validation";
@@ -33,6 +34,7 @@ const EMPTY_FORM = {
 export default function OrderForm() {
   const { lang, t } = useLang();
   const { packId, setPackId, quantity, total } = useOrder();
+  const router = useRouter();
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
@@ -107,13 +109,14 @@ export default function OrderForm() {
     }
   }
 
-  function resetForm() {
+  function goToProductPage() {
     setForm(EMPTY_FORM);
     setErrors({});
     setStatus("idle");
     setSuccessData(null);
     setSubmitError("");
     setPackId(DEFAULT_PACK_ID);
+    router.push("/");
   }
 
   if (status === "success" && successData) {
@@ -165,7 +168,7 @@ export default function OrderForm() {
             <b>{deliveryLabel}</b>
           </div>
         </div>
-        <button type="button" className="checkout-btn" onClick={resetForm}>
+        <button type="button" className="checkout-btn" onClick={goToProductPage}>
           {t("success_new_order")}
         </button>
       </div>

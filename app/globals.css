@@ -202,11 +202,10 @@ html[dir="rtl"] .dims-inline{text-align:right;}
 .faq-item[open] summary::after{content:"\2013";}
 .faq-item p{margin-top:12px; font-size:14.5px; color:var(--muted); max-width:680px;}
 
-.policy-body{display:flex; flex-direction:column; gap:26px;}
-.policy-section h3{font-size:17px; font-weight:700; font-family:var(--font-en-body); margin-bottom:8px;}
-html[dir="rtl"] .policy-section h3{font-family:var(--font-ar);}
-.policy-section p{font-size:14.5px; color:var(--muted); line-height:1.7;}
+.policy-list{display:flex; flex-direction:column; gap:16px; padding-inline-start:22px;}
+.policy-list li{font-size:15px; color:var(--ink); line-height:1.7; padding-inline-start:6px;}
 .policy-editable-note{margin-top:36px; padding:14px 16px; background:var(--cream); border:1px dashed var(--line); border-radius:6px; font-size:12.5px; color:var(--muted); text-align:center;}
+@media(max-width:600px){.policy-list{padding-inline-start:18px;} .policy-list li{font-size:14px;}}
 
 /* Order section */
 .order-summary-card{border:1px solid var(--line); border-radius:8px; background:#fff; padding:20px; margin-bottom:28px;}

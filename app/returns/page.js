@@ -7,7 +7,8 @@ import { PRODUCT } from "@/lib/product.config";
 
 export default function ReturnsPage() {
   const { t } = useLang();
-  const sections = ["1", "2", "3"];
+  const items = ["1", "2", "3", "4", "5", "6", "7"];
+  const days = PRODUCT.RETURN_POLICY_DAYS;
 
   return (
     <>
@@ -16,23 +17,14 @@ export default function ReturnsPage() {
         <div className="wrap" style={{ maxWidth: 760 }}>
           <div className="section-head">
             <span className="kicker">{t("legal_h")}</span>
-            <h2>{t("returns_page_title")}</h2>
-            <p>{t("returns_page_intro")}</p>
+            <h2>{t("returns_page_title", { days })}</h2>
           </div>
 
-          <div className="policy-body">
-            {sections.map((n) => (
-              <div className="policy-section" key={n}>
-                <h3>{t(`returns_section${n}_h`)}</h3>
-                <p>
-                  {t(`returns_section${n}_p`, {
-                    days: PRODUCT.RETURN_POLICY_DAYS,
-                    email: PRODUCT.SUPPORT_EMAIL,
-                  })}
-                </p>
-              </div>
+          <ol className="policy-list">
+            {items.map((n) => (
+              <li key={n}>{t(`returns_item${n}`, { days })}</li>
             ))}
-          </div>
+          </ol>
 
           <p className="policy-editable-note">{t("returns_editable_note")}</p>
         </div>

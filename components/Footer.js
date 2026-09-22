@@ -56,7 +56,7 @@ export default function Footer() {
           <div>
             <h5>{t("support_h")}</h5>
             <ul>
-              <li><a onClick={() => goToSection("faq")}>{t("support1")}</a></li>
+              <li><a onClick={() => router.push("/returns")}>{t("support1")}</a></li>
               <li><a onClick={() => goToSection("faq")}>{t("support2")}</a></li>
               <li><a href={whatsappHref} target="_blank" rel="noreferrer">{t("support3")}</a></li>
               <li><a href={`mailto:${PRODUCT.SUPPORT_EMAIL}`}>{t("support4")}</a></li>

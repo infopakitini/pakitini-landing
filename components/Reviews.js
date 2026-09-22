@@ -75,13 +75,26 @@ export default function Reviews() {
   return (
     <section id="reviews">
       <div className="wrap">
-        <div className="review-summary">
-          <div className="big">4.9</div>
-          <div>
-            <div className="stars">★★★★★</div>
-            <div style={{ fontSize: "13.5px", color: "var(--muted)", fontWeight: 600 }}>
-              {t("reviews_count")}
-            </div>
+        <div className="rating-summary">
+          <div className="rating-summary-top">
+            <span className="rating-summary-star">★</span>
+            <span className="rating-summary-avg">{PRODUCT.RATING_AVERAGE}</span>
+          </div>
+          <div className="rating-summary-count">{t("reviews_count", { count: PRODUCT.RATING_TOTAL })}</div>
+
+          <div className="rating-bars">
+            {PRODUCT.RATING_BREAKDOWN.map((row) => (
+              <div className="rating-bar-row" key={row.stars}>
+                <span className="rating-bar-stars">{"★".repeat(row.stars)}{"☆".repeat(5 - row.stars)}</span>
+                <span className="rating-bar-track">
+                  <span
+                    className="rating-bar-fill"
+                    style={{ width: `${PRODUCT.RATING_TOTAL ? (row.count / PRODUCT.RATING_TOTAL) * 100 : 0}%` }}
+                  />
+                </span>
+                <span className="rating-bar-count">({row.count})</span>
+              </div>
+            ))}
           </div>
         </div>
         <p style={{ textAlign: "center", color: "var(--muted)", fontSize: "12.5px", marginBottom: 24 }}>

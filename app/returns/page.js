@@ -25,8 +25,6 @@ export default function ReturnsPage() {
               <li key={n}>{t(`returns_item${n}`, { days })}</li>
             ))}
           </ol>
-
-          <p className="policy-editable-note">{t("returns_editable_note")}</p>
         </div>
       </section>
       <Footer />

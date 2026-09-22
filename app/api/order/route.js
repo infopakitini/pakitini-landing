@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { sendMail } from "@/lib/mailer";
 import { validateOrder } from "@/lib/validation";
 import { generateOrderId } from "@/lib/orderId";
 import { buildOrderEmailHtml, DELIVERY_TIME_LABELS } from "@/lib/emailTemplate";
@@ -58,9 +58,9 @@ export async function POST(request) {
     return NextResponse.json({ success: true, orderId: generateOrderId() });
   }
 
-  const { RESEND_API_KEY, ORDER_RECEIVER_EMAIL, FROM_EMAIL } = process.env;
-  if (!RESEND_API_KEY || !ORDER_RECEIVER_EMAIL || !FROM_EMAIL) {
-    console.error("Order API misconfigured: missing Resend env vars");
+  const { GMAIL_USER, GMAIL_APP_PASSWORD, ORDER_RECEIVER_EMAIL } = process.env;
+  if (!GMAIL_USER || !GMAIL_APP_PASSWORD || !ORDER_RECEIVER_EMAIL) {
+    console.error("Order API misconfigured: missing Gmail SMTP env vars");
     return NextResponse.json({ success: false, error: "server_misconfigured" }, { status: 500 });
   }
 
@@ -88,41 +88,31 @@ export async function POST(request) {
     notes: data.notes,
   };
 
-  const resend = new Resend(RESEND_API_KEY);
-
   // The owner notification is the actual order record — its delivery is
   // required for the request to count as a success.
   try {
-    const { error } = await resend.emails.send({
-      from: FROM_EMAIL,
+    await sendMail({
       to: ORDER_RECEIVER_EMAIL,
       replyTo: data.email,
       subject: `New Order Received — ${orderId} (${PRODUCT.CURRENCY} ${pack.price})`,
       html: buildOrderEmailHtml({ ...emailFields, recipient: "owner" }),
     });
-
-    if (error) {
-      console.error("Owner notification email failed:", error);
-      return NextResponse.json({ success: false, error: "email_failed" }, { status: 502 });
-    }
   } catch (err) {
-    console.error("Owner notification email threw:", err);
+    console.error("Owner notification email failed:", err);
     return NextResponse.json({ success: false, error: "email_failed" }, { status: 502 });
   }
 
   // The customer's invoice copy is best-effort — a failure here shouldn't
   // undo an order that's already been recorded via the owner email above.
   try {
-    const { error } = await resend.emails.send({
-      from: FROM_EMAIL,
+    await sendMail({
       to: data.email,
       replyTo: ORDER_RECEIVER_EMAIL,
       subject: `Your ${PRODUCT.NAME} Order Invoice — ${orderId}`,
       html: buildOrderEmailHtml({ ...emailFields, recipient: "customer" }),
     });
-    if (error) console.error("Customer invoice email failed:", error);
   } catch (err) {
-    console.error("Customer invoice email threw:", err);
+    console.error("Customer invoice email failed:", err);
   }
 
   return NextResponse.json({

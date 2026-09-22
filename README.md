@@ -2,17 +2,19 @@
 
 A single-product, Cash-on-Delivery landing page built with Next.js. No online
 payment, no accounts, no database — a customer picks a pack, fills in
-delivery details on a dedicated order page, and the order is emailed to the
-business via [Resend](https://resend.com) as a formatted invoice. Supports
+delivery details on a dedicated order page, and two emails go out: a plain
+order notification to the business, and a formatted invoice to the customer.
+Both are sent through Gmail's own SMTP (free, no domain required). Supports
 English and Arabic (full RTL).
 
 ## Stack
 
 - Next.js 16 (App Router, JavaScript)
 - Plain CSS (no framework) — all styles in `app/globals.css`
-- [Resend](https://resend.com) for transactional order emails
+- [Nodemailer](https://nodemailer.com) over Gmail SMTP for order emails — no
+  third-party email API, no domain to buy or verify
 - [Zod](https://zod.dev) for request validation (shared by client + server)
-- No database — the order email *is* the order record (v1 by design)
+- No database — the owner notification email *is* the order record (v1 by design)
 
 ## Pages
 
@@ -31,13 +33,15 @@ app/
   page.js            the landing page (marketing sections)
   order/page.js      the checkout page (reads ?pack= from the URL)
   globals.css         all styling
-  api/order/route.js  POST handler: validates, resolves price server-side, emails via Resend
+  api/order/route.js  POST handler: validates, resolves price server-side, emails via Gmail SMTP
 lib/
   product.config.js   <-- EDIT THIS to change product name/pack prices/images/description
   translations.js     <-- EDIT THIS to change any English/Arabic copy
   validation.js        shared client + server validation rules
   orderId.js           order ID generator (COD-YYYYMMDD-XXXX)
-  emailTemplate.js      the invoice-style HTML email sent for each new order
+  emailTemplate.js      the HTML email template — different framing for the
+                        owner notification vs. the customer's invoice copy
+  mailer.js             sends mail via Gmail SMTP (nodemailer)
   savedCustomer.js      remembers a customer's own details in localStorage so
                         the order form auto-fills on a return visit (this
                         device only — never sent anywhere but the order form)
@@ -65,22 +69,26 @@ cp .env.example .env.local
 Fill in `.env.local`:
 
 ```
-RESEND_API_KEY=re_xxxxxxxxxxxx
+GMAIL_USER=infopakitini@gmail.com
+GMAIL_APP_PASSWORD=
+FROM_NAME=Pakitini
 ORDER_RECEIVER_EMAIL=infopakitini@gmail.com
-FROM_EMAIL=onboarding@resend.dev
 ```
 
-- Get `RESEND_API_KEY` from the [Resend dashboard](https://resend.com/api-keys).
-- `ORDER_RECEIVER_EMAIL` is your business inbox — every new order's invoice
-  email lands here. This can be a normal Gmail address like
-  `infopakitini@gmail.com`.
-- `FROM_EMAIL` is the address Resend sends **as**, and it **cannot** be a
-  Gmail/Yahoo/Outlook address — Resend requires a domain you own and verify
-  via DNS, since nobody can verify ownership of `gmail.com`. Use the shared
-  sandbox `onboarding@resend.dev` while testing (works immediately); once you
-  buy a domain, verify it in Resend and switch to `orders@yourdomain.com`.
-  The order email's Reply-To is always set to the customer's email, so
-  replying from your Gmail inbox reaches the customer directly either way.
+- `GMAIL_USER` / `GMAIL_APP_PASSWORD` — the Gmail account emails are sent
+  from, authenticated with an **App Password** (not the account's normal
+  login password). One-time setup on that Google account:
+  1. Turn on 2-Step Verification: https://myaccount.google.com/security
+  2. Create an App Password: https://myaccount.google.com/apppasswords
+     — copy the 16-character value into `GMAIL_APP_PASSWORD`
+- `ORDER_RECEIVER_EMAIL` is your business inbox — the plain "new order
+  received" notification lands here (this is the actual order record; see
+  §15 below).
+- The customer separately receives their own invoice copy, emailed to
+  whatever address they typed in the order form — no domain, no third-party
+  email API, and it works for any recipient (unlike a shared sandbox sending
+  domain, which is typically restricted to your own inbox until a custom
+  domain is verified).
 
 Then:
 
@@ -97,11 +105,12 @@ fail gracefully with a retry message instead of pretending to succeed.
 2. In [Vercel](https://vercel.com), click **Add New → Project** and import
    that repository. Vercel auto-detects Next.js — no build config needed.
 3. Before the first deploy (or right after, then redeploy), go to
-   **Project → Settings → Environment Variables** and add the same three
-   variables from `.env.example`:
-   - `RESEND_API_KEY`
+   **Project → Settings → Environment Variables** and add the same variables
+   from `.env.example`:
+   - `GMAIL_USER`
+   - `GMAIL_APP_PASSWORD`
+   - `FROM_NAME`
    - `ORDER_RECEIVER_EMAIL`
-   - `FROM_EMAIL`
 4. Click **Deploy**. The order form's `/api/order` endpoint runs as a
    Vercel serverless function automatically — nothing needs to "stay running."
 
@@ -114,7 +123,7 @@ follow Vercel's DNS instructions (usually an `A` record to Vercel's IP or a
 
 ## What's intentionally not included (v1)
 
-- No database — orders exist only as the email sent via Resend.
+- No database — orders exist only as the owner notification email.
 - No online payment methods — Cash on Delivery only.
 - No accounts, wishlist, cart page, or multi-product catalog.
 - No order-management dashboard — read new orders from the inbox.

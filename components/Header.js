@@ -51,14 +51,6 @@ export default function Header() {
               <span>{t("announce_delivery")}</span>
             </span>
           </div>
-          <div className="lang-toggle">
-            <button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>
-              EN
-            </button>
-            <button className={lang === "ar" ? "active" : ""} onClick={() => setLang("ar")}>
-              العربية
-            </button>
-          </div>
         </div>
       </div>
 
@@ -71,8 +63,24 @@ export default function Header() {
             <a onClick={() => goToSection("how")}>{t("nav_how")}</a>
             <a onClick={() => goToSection("reviews")}>{t("nav_reviews")}</a>
             <a onClick={() => goToSection("faq")}>{t("nav_faq")}</a>
+            <div className="lang-toggle nav-lang-mobile">
+              <button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>
+                EN
+              </button>
+              <button className={lang === "ar" ? "active" : ""} onClick={() => setLang("ar")}>
+                العربية
+              </button>
+            </div>
           </div>
           <div className="nav-right">
+            <div className="lang-toggle nav-lang-toggle">
+              <button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>
+                EN
+              </button>
+              <button className={lang === "ar" ? "active" : ""} onClick={() => setLang("ar")}>
+                العربية
+              </button>
+            </div>
             {pathname !== "/order" && (
               <button className="cart-btn" onClick={() => router.push(`/order?pack=${packId}`)}>
                 {t("nav_order")}

@@ -97,9 +97,6 @@ export default function Reviews() {
             ))}
           </div>
         </div>
-        <p style={{ textAlign: "center", color: "var(--muted)", fontSize: "12.5px", marginBottom: 24 }}>
-          {t("reviews_note")}
-        </p>
         <div className="review-grid">
           {reviews.map((r) => (
             <ReviewCard key={r.who} {...r} />

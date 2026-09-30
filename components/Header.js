@@ -63,7 +63,7 @@ export default function Header() {
       <nav className="nav">
         <div className="wrap">
           <div className="logo">
-            Pak<span className="dot">i</span>t<span className="dot">i</span>ni
+            <img src="/images/logo-header.png" alt="Pakitini" className="logo-img-header" />
           </div>
           <div className={`nav-links${menuOpen ? " open" : ""}`}>
             <a onClick={() => goToSection("how")}>{t("nav_how")}</a>

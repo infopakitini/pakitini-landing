@@ -12,9 +12,9 @@
   --red-tint:#FDEBEA;
   --red-line:#F3C4C0;
   --radius:3px;
-  --font-en-display: var(--font-en-display), 'Montserrat', sans-serif;
-  --font-en-body: var(--font-en-body), 'Inter', sans-serif;
-  --font-ar: var(--font-ar), 'Tajawal', sans-serif;
+  --font-en-display: var(--font-poppins), 'Poppins', sans-serif;
+  --font-en-body: var(--font-poppins), 'Poppins', sans-serif;
+  --font-ar: var(--font-tajawal), 'Tajawal', sans-serif;
 }
 *{box-sizing:border-box; margin:0; padding:0;}
 html{scroll-behavior:smooth;}
@@ -44,15 +44,12 @@ html[dir="rtl"] svg.flip-rtl{transform:scaleX(-1);}
 .lang-toggle button.active{background:#fff; color:var(--ink);}
 
 .announce{background:#0a671c; color:#fff; padding:11px 0; font-size:13.5px; font-weight:600; letter-spacing:0.01em; text-align:center;}
-.announce .wrap{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;}
-.announce-info{display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
-.announce .chip{display:flex; align-items:center; gap:8px; font-weight:bold;}
-.announce .chip svg{width:16px; height:16px; color:var(--gold);}
+.announce .wrap{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:nowrap;}
+.announce-info{display:flex; align-items:center; justify-content:center; gap:22px; flex:1; min-width:0;}
+.announce .chip{display:flex; align-items:center; gap:8px; font-weight:bold; white-space:nowrap;}
+.announce .chip svg{width:16px; height:16px; color:var(--gold); flex-shrink:0;}
 .announce .sep{color:#8a8385;}
-@media(max-width:600px){
-  .announce .wrap{justify-content:center;}
-  .announce .lang-toggle{order:-1; margin-bottom:4px;}
-}
+.announce .lang-toggle{flex-shrink:0;}
 
 .nav{position:sticky; top:0; z-index:60; background:#0a671c;}
 .nav .wrap{display:flex; align-items:center; justify-content:space-between; height:72px;}
@@ -324,11 +321,13 @@ footer ul li a:hover{color:var(--gold);}
 @media(max-width:600px){
   .wrap{padding:0 16px;}
   .announce{padding:8px 0;}
-  .announce .wrap{gap:4px 10px; font-size:10.5px; font-weight:500;}
-  .announce-info{gap:6px 10px;}
+  .announce .wrap{gap:6px; font-size:7.5px; font-weight:500;}
+  .announce-info{gap:5px;}
   .announce .chip{font-weight:800;}
-  .announce .chip svg{width:30px; height:12px; stroke-width:2.4;}
-  .lang-toggle{transform:scale(0.9); transform-origin:center;}
+  .announce .chip svg{display:none;}
+  .announce .sep{display:none;}
+  .announce .lang-toggle{padding:2px; gap:1px;}
+  .announce .lang-toggle button{padding:3px 7px; font-size:9px;}
   .nav .wrap{height:60px;}
   .logo{font-size:19px;}
   .logo-img{height:26px;}

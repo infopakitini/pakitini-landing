@@ -1,28 +1,24 @@
-import { Montserrat, Inter, Tajawal } from "next/font/google";
+import { Poppins, Tajawal } from "next/font/google";
 import { LangProvider } from "@/components/LangProvider";
 import { OrderProvider } from "@/components/OrderProvider";
 import MetaPixel from "@/components/MetaPixel";
 import { PRODUCT } from "@/lib/product.config";
 import "./globals.css";
 
-const montserrat = Montserrat({
+// Single Poppins load covers both the display and body font roles (see
+// globals.css --font-en-display / --font-en-body) — Poppins has no Arabic
+// glyphs, so Tajawal below still handles the Arabic UI.
+const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["300", "600", "700"],
-  variable: "--font-en-display",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-en-body",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-poppins",
   display: "swap",
 });
 
 const tajawal = Tajawal({
   subsets: ["arabic"],
   weight: ["400", "500", "700"],
-  variable: "--font-ar",
+  variable: "--font-tajawal",
   display: "swap",
 });
 
@@ -45,7 +41,7 @@ export default function RootLayout({ children }) {
       lang="en"
       dir="ltr"
       data-scroll-behavior="smooth"
-      className={`${montserrat.variable} ${inter.variable} ${tajawal.variable}`}
+      className={`${poppins.variable} ${tajawal.variable}`}
     >
       <body>
         <MetaPixel />

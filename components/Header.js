@@ -3,7 +3,6 @@
 import { useRouter, usePathname } from "next/navigation";
 import { useLang } from "./LangProvider";
 import { useOrder } from "./OrderProvider";
-import { PRODUCT } from "@/lib/product.config";
 
 export default function Header() {
   const { lang, setLang, t } = useLang();
@@ -55,13 +54,7 @@ export default function Header() {
       <nav className="nav">
         <div className="wrap">
           <div className="logo">
-            {PRODUCT.LOGO ? (
-              <img src={PRODUCT.LOGO} alt={PRODUCT.NAME} className="logo-img" />
-            ) : (
-              <>
-                Pak<span className="dot">i</span>t<span className="dot">i</span>ni
-              </>
-            )}
+            Pak<span className="dot">i</span>t<span className="dot">i</span>ni
           </div>
           <div className="nav-links">
             <a onClick={() => goToSection("how")}>{t("nav_how")}</a>

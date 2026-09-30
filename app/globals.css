@@ -59,9 +59,18 @@ html[dir="rtl"] svg.flip-rtl{transform:scaleX(-1);}
 .nav-links{display:flex; gap:34px; font-size:14px; font-weight:600;}
 .nav-links a{color:#fff;}
 .nav-links a:hover{color:var(--gold);}
+.nav-right{display:flex; align-items:center; gap:12px;}
 .cart-btn{display:flex; align-items:center; gap:8px; background:var(--ink); color:#fff; border:none; padding:11px 18px; border-radius:var(--radius); font-size:13.5px; font-weight:700;}
 .cart-btn:hover{background:var(--green-deep);}
-@media(max-width:760px){.nav-links{display:none;}}
+.menu-toggle{display:none; align-items:center; justify-content:center; background:none; border:none; color:#fff; padding:4px;}
+.menu-toggle svg{width:24px; height:24px;}
+@media(max-width:760px){
+  .nav-links{display:none;}
+  .nav-links.open{display:flex; position:absolute; top:100%; left:0; right:0; flex-direction:column; gap:2px; background:#0a671c; padding:8px 16px 14px; box-shadow:0 12px 24px -12px rgba(0,0,0,0.35); border-top:1px solid rgba(255,255,255,0.15);}
+  .nav-links.open a{padding:12px 8px; border-bottom:1px solid rgba(255,255,255,0.12);}
+  .nav-links.open a:last-child{border-bottom:none;}
+  .menu-toggle{display:flex;}
+}
 
 .hero{padding:52px 0 64px; background:linear-gradient(180deg,var(--cream) 0%, #fff 60%);}
 .hero .wrap{display:grid; grid-template-columns:1.02fr 0.98fr; gap:56px; align-items:start;}

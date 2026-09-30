@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useLang } from "./LangProvider";
 import { useOrder } from "./OrderProvider";
@@ -9,8 +10,16 @@ export default function Header() {
   const { packId } = useOrder();
   const router = useRouter();
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Close the mobile menu whenever the route changes (e.g. tapping a link
+  // that navigates to "/" from another page).
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   function goToSection(id) {
+    setMenuOpen(false);
     if (pathname === "/") {
       document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     } else {
@@ -56,16 +65,35 @@ export default function Header() {
           <div className="logo">
             Pak<span className="dot">i</span>t<span className="dot">i</span>ni
           </div>
-          <div className="nav-links">
+          <div className={`nav-links${menuOpen ? " open" : ""}`}>
             <a onClick={() => goToSection("how")}>{t("nav_how")}</a>
             <a onClick={() => goToSection("reviews")}>{t("nav_reviews")}</a>
             <a onClick={() => goToSection("faq")}>{t("nav_faq")}</a>
           </div>
-          {pathname !== "/order" && (
-            <button className="cart-btn" onClick={() => router.push(`/order?pack=${packId}`)}>
-              {t("nav_order")}
+          <div className="nav-right">
+            {pathname !== "/order" && (
+              <button className="cart-btn" onClick={() => router.push(`/order?pack=${packId}`)}>
+                {t("nav_order")}
+              </button>
+            )}
+            <button
+              type="button"
+              className="menu-toggle"
+              aria-label={menuOpen ? t("menu_close") : t("menu_open")}
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((v) => !v)}
+            >
+              {menuOpen ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M6 6l12 12M18 6 6 18" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M3 6h18M3 12h18M3 18h18" />
+                </svg>
+              )}
             </button>
-          )}
+          </div>
         </div>
       </nav>
     </>

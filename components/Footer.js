@@ -27,7 +27,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div>
             <div className="logo">
-              <img src="/images/logo-header.png" alt={PRODUCT.NAME} className="logo-img-header" />
+              <img src="/images/logo-footer.png" alt={PRODUCT.NAME} className="logo-img-footer" />
             </div>
             <p className="about">{t("footer_about")}</p>
             <div className="cod-footer-badge">

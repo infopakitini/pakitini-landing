@@ -1,10 +1,11 @@
 import Script from "next/script";
+import { PRODUCT } from "@/lib/product.config";
 
-// Loads the Meta (Facebook/Instagram) Pixel base code, but only when
-// NEXT_PUBLIC_META_PIXEL_ID is set — safe to leave unconfigured, does
-// nothing until you add a real Pixel ID. See README for setup steps.
+// Loads the Meta (Facebook/Instagram) Pixel base code. Uses PRODUCT.META_PIXEL_ID
+// by default; set NEXT_PUBLIC_META_PIXEL_ID to override per-deployment (e.g. a
+// staging pixel) without touching code.
 export default function MetaPixel() {
-  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID || PRODUCT.META_PIXEL_ID;
   if (!pixelId) return null;
 
   return (

@@ -103,6 +103,18 @@ export default function OrderForm() {
         });
       }
 
+      // Fires only if a TikTok Pixel is configured (see components/TikTokPixel.js) —
+      // reports the completed COD order as a CompletePayment for ad optimization.
+      if (typeof window !== "undefined" && window.ttq) {
+        window.ttq.track("CompletePayment", {
+          value: data.total,
+          currency: PRODUCT.CURRENCY,
+          content_name: PRODUCT.NAME,
+          content_id: result.data.packId,
+          quantity: data.quantity,
+        });
+      }
+
       saveOrderSuccess({
         orderId: data.orderId,
         packId: result.data.packId,

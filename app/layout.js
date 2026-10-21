@@ -2,6 +2,7 @@ import { Poppins, Tajawal } from "next/font/google";
 import { LangProvider } from "@/components/LangProvider";
 import { OrderProvider } from "@/components/OrderProvider";
 import MetaPixel from "@/components/MetaPixel";
+import TikTokPixel from "@/components/TikTokPixel";
 import { PRODUCT } from "@/lib/product.config";
 import "./globals.css";
 
@@ -45,6 +46,7 @@ export default function RootLayout({ children }) {
     >
       <body>
         <MetaPixel />
+        <TikTokPixel />
         <LangProvider>
           <OrderProvider>{children}</OrderProvider>
         </LangProvider>

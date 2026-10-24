@@ -1,4 +1,4 @@
-import { Poppins, Tajawal } from "next/font/google";
+import { Poppins, Tajawal, Caveat } from "next/font/google";
 import { LangProvider } from "@/components/LangProvider";
 import { OrderProvider } from "@/components/OrderProvider";
 import MetaPixel from "@/components/MetaPixel";
@@ -23,6 +23,14 @@ const tajawal = Tajawal({
   display: "swap",
 });
 
+// Handwritten accent font for the offer banner's "Save Big!" text only.
+const caveat = Caveat({
+  subsets: ["latin"],
+  weight: ["700"],
+  variable: "--font-script",
+  display: "swap",
+});
+
 export const metadata = {
   title: `${PRODUCT.NAME} — ${PRODUCT.TAGLINE} | Cash on Delivery in the UAE`,
   description: PRODUCT.DESCRIPTION,
@@ -42,7 +50,7 @@ export default function RootLayout({ children }) {
       lang="ar"
       dir="rtl"
       data-scroll-behavior="smooth"
-      className={`${poppins.variable} ${tajawal.variable}`}
+      className={`${poppins.variable} ${tajawal.variable} ${caveat.variable}`}
     >
       <body>
         <MetaPixel />

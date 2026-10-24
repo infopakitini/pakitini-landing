@@ -87,10 +87,27 @@ html[dir="rtl"] svg.flip-rtl{transform:scaleX(-1);}
 .bullets li svg{width:17px; height:17px; color:var(--green); flex-shrink:0; margin-top:3px;}
 
 .picker{border:1px solid var(--line); border-radius:6px; overflow:hidden; margin-bottom:22px;}
-.offer-banner{display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:10px 16px; background:linear-gradient(135deg,var(--green-tint),#fff); padding:14px 16px; border-bottom:1px solid var(--line);}
-.offer-badge{display:inline-flex; align-items:center; gap:5px; background:var(--red); color:#fff; font-size:11.5px; font-weight:800; letter-spacing:0.01em; padding:6px 12px; border-radius:20px; transform:rotate(-1.5deg);}
-.offer-save{font-family:var(--font-en-display); font-style:italic; font-weight:700; color:var(--green-deep); font-size:16px;}
-.offer-discount{display:inline-flex; align-items:center; background:var(--red); color:#fff; font-size:12.5px; font-weight:800; padding:6px 14px; border-radius:6px; transform:rotate(1deg);}
+.offer-banner{display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:14px 22px; background:linear-gradient(135deg,var(--green-tint),#fff); padding:18px 20px 14px; border-bottom:1px solid var(--line);}
+
+/* Ribbon: red pennant with a folded tail and a flame badge overlapping its left edge. */
+.offer-ribbon{position:relative; display:flex; flex-direction:column; justify-content:center; gap:1px; background:var(--red); color:#fff; padding:8px 26px 8px 30px; clip-path:polygon(0 0, 100% 0, calc(100% - 14px) 50%, 100% 100%, 0 100%); margin-inline-start:14px;}
+html[dir="rtl"] .offer-ribbon{clip-path:polygon(14px 50%, 0 0, 100% 0, 100% 100%, 0 100%); padding:8px 30px 8px 26px;}
+.offer-ribbon-tail{position:absolute; inset-inline-start:0; bottom:-7px; width:0; height:0; border-inline-start:7px solid transparent; border-top:7px solid #7a1812;}
+.offer-ribbon-flame{position:absolute; inset-inline-start:-14px; top:50%; transform:translateY(-50%); width:30px; height:30px; display:flex; align-items:center; justify-content:center; background:var(--gold); border-radius:50%; font-size:16px; box-shadow:0 2px 6px rgba(0,0,0,0.25);}
+.offer-ribbon-text{display:flex; flex-direction:column; line-height:1.15;}
+.offer-ribbon-text b:first-child{font-size:11px; font-weight:700; letter-spacing:0.03em; text-transform:uppercase;}
+.offer-ribbon-text b:last-child{font-size:17px; font-weight:800; color:var(--gold); letter-spacing:0.01em;}
+
+.offer-save{font-family:var(--font-script), cursive; font-weight:700; color:var(--green-deep); font-size:30px; line-height:1; transform:rotate(-2deg); text-decoration:underline; text-decoration-style:wavy; text-decoration-thickness:1.5px; text-underline-offset:5px;}
+
+/* Paint-splash badge: an SVG blob stretched to fill the box, with centered text on top. */
+.offer-splash{position:relative; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.offer-splash .splash-shape{position:absolute; inset:0; width:100%; height:100%; overflow:visible;}
+.offer-splash .splash-shape path{fill:var(--red); filter:drop-shadow(0 3px 5px rgba(0,0,0,0.2));}
+.offer-splash .splash-text{position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; color:#fff; text-align:center;}
+.offer-splash-discount{width:118px; height:76px; transform:rotate(2deg);}
+.offer-splash-discount .splash-text .small{font-size:10.5px; font-weight:700; letter-spacing:0.02em;}
+.offer-splash-discount .splash-text .big{font-family:var(--font-en-display); font-size:19px; font-weight:800; line-height:1.1;}
 .pick-title{background:var(--cream); padding:12px 18px; font-size:12.5px; font-weight:700; letter-spacing:0.03em; color:var(--muted); border-bottom:1px solid var(--line);}
 .pick-option{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 18px; border-bottom:1px solid var(--line); cursor:pointer; transition:background .15s ease;}
 .pick-option:last-child{border-bottom:none;}
@@ -107,13 +124,17 @@ html[dir="rtl"] .pick-option.active{box-shadow:inset -3px 0 0 var(--green);}
 .pick-name .tag.gold{background:var(--gold);}
 .pick-name .tag.out-of-stock-tag{background:var(--red);}
 .pick-sub{font-size:12.5px; color:var(--muted); margin-top:2px;}
-.pick-price{text-align:right; flex-shrink:0;}
-html[dir="rtl"] .pick-price{text-align:left;}
+.pick-price{text-align:right; flex-shrink:0; display:flex; flex-direction:column; align-items:flex-end; gap:2px;}
+html[dir="rtl"] .pick-price{text-align:left; align-items:flex-start;}
+.pick-price:has(.price-splash){flex-direction:row; align-items:center; gap:10px;}
 .pick-price .amt{font-family:var(--font-en-display); font-size:19px; font-weight:600; direction:ltr; unicode-bidi:isolate;}
 .pick-price .amt span{font-size:12px; font-weight:600; color:var(--muted);}
-.pick-price .now-just{font-size:10px; font-weight:800; color:var(--red); text-transform:uppercase; letter-spacing:0.03em;}
 .pick-price .was{font-family:var(--font-en-display); font-size:12.5px; font-weight:600; color:var(--muted); text-decoration:line-through; direction:ltr; unicode-bidi:isolate;}
 .pick-price .was span{font-size:10px;}
+.price-splash{width:84px; height:54px; transform:rotate(-2deg);}
+.price-splash .splash-text .small{font-size:8.5px; font-weight:700; letter-spacing:0.02em;}
+.price-splash .splash-text .big{font-family:var(--font-en-display); font-size:15px; font-weight:800; line-height:1.1; direction:ltr; unicode-bidi:isolate;}
+.price-splash .splash-text .big .cur{font-size:10px; font-weight:600;}
 
 .cod-banner{display:flex; align-items:center; gap:10px; background:var(--ink); color:#fff; padding:12px 16px; border-radius:5px; font-size:13.5px; font-weight:700; margin-bottom:16px; flex-wrap:wrap;}
 .cod-banner svg{width:18px; height:18px; color:var(--gold); flex-shrink:0;}
@@ -348,11 +369,19 @@ footer ul li a:hover{color:var(--gold);}
   .rating-row{font-size:12.5px; margin:8px 0 18px; flex-wrap:wrap;}
   .bullets li{font-size:14px; padding:5px 0;}
   .bullets{margin-bottom:20px;}
-  .offer-banner{padding:12px 14px; gap:8px 12px;}
-  .offer-badge{font-size:10.5px; padding:5px 10px;}
-  .offer-save{font-size:14px;}
-  .offer-discount{font-size:11px; padding:5px 11px;}
-  .pick-price .now-just{font-size:9px;}
+  .offer-banner{padding:14px 12px 10px; gap:10px 14px;}
+  .offer-ribbon{padding:7px 20px 7px 24px; margin-inline-start:12px;}
+  html[dir="rtl"] .offer-ribbon{padding:7px 24px 7px 20px;}
+  .offer-ribbon-flame{width:26px; height:26px; font-size:14px; inset-inline-start:-12px;}
+  .offer-ribbon-text b:first-child{font-size:9.5px;}
+  .offer-ribbon-text b:last-child{font-size:14.5px;}
+  .offer-save{font-size:24px;}
+  .offer-splash-discount{width:98px; height:64px;}
+  .offer-splash-discount .splash-text .small{font-size:9px;}
+  .offer-splash-discount .splash-text .big{font-size:16px;}
+  .price-splash{width:72px; height:46px;}
+  .price-splash .splash-text .small{font-size:7.5px;}
+  .price-splash .splash-text .big{font-size:13px;}
   .pick-price .was{font-size:11px;}
   .pick-title{padding:10px 14px; font-size:11.5px;}
   .pick-option{padding:13px 14px; gap:10px;}

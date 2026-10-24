@@ -5,31 +5,16 @@ import { translations } from "@/lib/translations";
 
 const LangContext = createContext(null);
 
-function readStoredLang() {
-  try {
-    const stored = window.localStorage.getItem("pakitini_lang");
-    return stored === "ar" || stored === "en" ? stored : null;
-  } catch {
-    return null;
-  }
-}
-
+// Arabic is the language on every fresh page load — deliberately not
+// remembered across visits (no localStorage), so the site always opens in
+// Arabic regardless of what a visitor picked last time. Switching to EN
+// still works normally for the current visit/session.
 export function LangProvider({ children }) {
   const [lang, setLang] = useState("ar");
 
   useEffect(() => {
-    const stored = readStoredLang();
-    if (stored) setLang(stored);
-  }, []);
-
-  useEffect(() => {
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-    try {
-      window.localStorage.setItem("pakitini_lang", lang);
-    } catch {
-      // storage unavailable — non-fatal, language just won't persist
-    }
   }, [lang]);
 
   const value = useMemo(() => {

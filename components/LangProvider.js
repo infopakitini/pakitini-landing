@@ -15,7 +15,7 @@ function readStoredLang() {
 }
 
 export function LangProvider({ children }) {
-  const [lang, setLang] = useState("en");
+  const [lang, setLang] = useState("ar");
 
   useEffect(() => {
     const stored = readStoredLang();

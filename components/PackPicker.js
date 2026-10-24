@@ -11,6 +11,11 @@ export default function PackPicker() {
 
   return (
     <div className="picker">
+      <div className="offer-banner">
+        <span className="offer-badge">🔥 {t("offer_badge")}</span>
+        <span className="offer-save">{t("offer_save_big")}</span>
+        <span className="offer-discount">{t("offer_discount")}</span>
+      </div>
       <div className="pick-title">{t("pick_title")}</div>
       {PACKS.map((pack) => {
         const inStock = isPackInStock(pack);
@@ -45,6 +50,14 @@ export default function PackPicker() {
               </div>
             </div>
             <div className="pick-price">
+              {pack.wasPrice && inStock && (
+                <>
+                  {packId === pack.id && <div className="now-just">{t("now_just")}</div>}
+                  <div className="was">
+                    <span>{currency}</span> {pack.wasPrice}
+                  </div>
+                </>
+              )}
               <div className="amt">
                 <span>{currency}</span> {pack.price}
               </div>

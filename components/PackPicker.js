@@ -23,13 +23,15 @@ export default function PackPicker() {
   return (
     <div className="picker">
       <div className="offer-banner">
-        <div className="offer-ribbon">
-          <span className="offer-ribbon-flame">🔥</span>
-          <span className="offer-ribbon-text">
-            <b>{t("offer_limited")}</b>
-            <b>{t("offer_special")}</b>
-          </span>
+        <div className="offer-ribbon-wrap">
+          <div className="offer-ribbon">
+            <span className="offer-ribbon-text">
+              <b>{t("offer_limited")}</b>
+              <b>{t("offer_special")}</b>
+            </span>
+          </div>
           <span className="offer-ribbon-tail" aria-hidden="true" />
+          <span className="offer-ribbon-flame">🔥</span>
         </div>
         <div className="offer-save">{t("offer_save_big")}</div>
         <div className="offer-splash offer-splash-discount">
